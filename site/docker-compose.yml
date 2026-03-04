@@ -1,0 +1,17 @@
+services:
+  amazigh-comics:
+    build: .
+    container_name: amazigh-comics
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.amazigh-comics.rule=Host(`amazighcomics.fr`)"
+      - "traefik.http.routers.amazigh-comics.entrypoints=websecure"
+      - "traefik.http.routers.amazigh-comics.tls.certresolver=letsencrypt"
+      - "traefik.http.services.amazigh-comics.loadbalancer.server.port=3000"
+    networks:
+      - traefik
+
+networks:
+  traefik:
+    external: true

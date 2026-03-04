@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AmazighComics — POC Dessin</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Inter:wght@400;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #1a1a1a;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    color: #f5f0e8;
+  }
+
+  h1 {
+    font-family: 'Lora', serif;
+    font-size: 2.5rem;
+    color: #C4843A;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+
+  .subtitle {
+    color: #5C6B3C;
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  .panels {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    max-width: 800px;
+    width: 100%;
+  }
+
+  .panel {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    position: relative;
+  }
+
+  .panel-number {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #C4843A;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    z-index: 10;
+  }
+
+  .panel svg {
+    width: 100%;
+    display: block;
+  }
+
+  .panel-caption {
+    background: rgba(26, 26, 26, 0.9);
+    padding: 16px 20px;
+    font-size: 0.95rem;
+    color: #d4c5a9;
+    border-top: 2px solid #C4843A;
+  }
+
+  .panel-caption .kabyle {
+    color: #C4843A;
+    font-weight: 600;
+  }
+
+  /* Bulle de dialogue */
+  .speech-bubble {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .character-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+    max-width: 800px;
+    width: 100%;
+    margin-top: 40px;
+  }
+
+  .character-card {
+    background: #2a2520;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    border: 2px solid #3a3530;
+  }
+
+  .character-card svg {
+    width: 100%;
+    display: block;
+  }
+
+  .character-info {
+    padding: 16px;
+  }
+
+  .character-info h3 {
+    font-family: 'Lora', serif;
+    color: #C4843A;
+    margin-bottom: 4px;
+  }
+
+  .character-info .tifinagh {
+    color: #5C6B3C;
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+  }
+
+  .character-info p {
+    font-size: 0.85rem;
+    color: #a09888;
+    line-height: 1.5;
+  }
+
+  .section-title {
+    font-family: 'Lora', serif;
+    font-size: 1.8rem;
+    color: #C4843A;
+    margin-top: 60px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .tifinagh-deco {
+    color: #5C6B3C;
+    font-size: 1.5rem;
+    letter-spacing: 8px;
+  }
+</style>
+</head>
+<body>
+
+<h1>ⴰⵎⴰⵣⵉⵖ Comics</h1>
+<p class="subtitle">EP01 — Le Village Insoumis · POC Dessin</p>
+
+<div class="panels">
+
+  <!-- PANEL 1 : Djurdjura à l'aube -->
+  <div class="panel">
+    <div class="panel-number">1</div>
+    <svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+      <!-- Ciel aurore -->
+      <defs>
+        <linearGradient id="sky1" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1a1a3e"/>
+          <stop offset="30%" stop-color="#4A3560"/>
+          <stop offset="60%" stop-color="#C4843A"/>
+          <stop offset="85%" stop-color="#E8A84C"/>
+          <stop offset="100%" stop-color="#F5D998"/>
+        </linearGradient>
+        <linearGradient id="mountain1" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#2a3a4a"/>
+          <stop offset="100%" stop-color="#1a2a35"/>
+        </linearGradient>
+        <linearGradient id="mountain2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#3a4a3a"/>
+          <stop offset="100%" stop-color="#2a3a2a"/>
+        </linearGradient>
+        <radialGradient id="sun1" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0%" stop-color="#FFD700" stop-opacity="1"/>
+          <stop offset="40%" stop-color="#E8A84C" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="#C4843A" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="fog1" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#F5D998" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#F5D998" stop-opacity="0"/>
+        </linearGradient>
+        <!-- Motif berbère pour bordure -->
+        <pattern id="berber-border" patternUnits="userSpaceOnUse" width="40" height="8">
+          <path d="M0 4 L10 0 L20 4 L10 8 Z" fill="#C4843A" opacity="0.6"/>
+          <path d="M20 4 L30 0 L40 4 L30 8 Z" fill="#5C6B3C" opacity="0.6"/>
+        </pattern>
+      </defs>
+
+      <!-- Ciel -->
+      <rect width="800" height="500" fill="url(#sky1)"/>
+
+      <!-- Soleil levant -->
+      <circle cx="400" cy="340" r="80" fill="url(#sun1)"/>
+      <circle cx="400" cy="340" r="25" fill="#FFD700" opacity="0.9"/>
+
+      <!-- Étoiles restantes -->
+      <circle cx="100" cy="40" r="1.5" fill="white" opacity="0.7"/>
+      <circle cx="250" cy="60" r="1" fill="white" opacity="0.5"/>
+      <circle cx="600" cy="30" r="1.5" fill="white" opacity="0.6"/>
+      <circle cx="720" cy="70" r="1" fill="white" opacity="0.4"/>
+      <circle cx="500" cy="50" r="1.2" fill="white" opacity="0.5"/>
+
+      <!-- Montagnes arrière-plan (Djurdjura) -->
+      <path d="M-50 350 L80 200 L150 250 L250 160 L350 220 L420 140 L500 200 L580 170 L650 230 L750 180 L850 280 L850 500 L-50 500Z" fill="url(#mountain1)" opacity="0.7"/>
+
+      <!-- Montagnes second plan -->
+      <path d="M-50 380 L50 280 L120 320 L200 250 L300 300 L380 230 L450 290 L530 260 L620 310 L700 250 L800 330 L850 380 L850 500 L-50 500Z" fill="url(#mountain2)" opacity="0.8"/>
+
+      <!-- Neige sur les sommets -->
+      <path d="M420 140 L440 155 L430 148 L425 158 L415 150 L405 160 L400 148 Z" fill="white" opacity="0.6"/>
+      <path d="M250 160 L265 175 L258 168 L248 178 L240 170 L235 175 Z" fill="white" opacity="0.5"/>
+
+      <!-- Brume dans la vallée -->
+      <ellipse cx="400" cy="420" rx="400" ry="40" fill="url(#fog1)"/>
+
+      <!-- Collines au premier plan avec végétation -->
+      <path d="M-50 430 L100 390 L200 410 L350 380 L500 400 L650 385 L800 410 L850 430 L850 500 L-50 500Z" fill="#2a3a2a"/>
+
+      <!-- Arbres (oliviers stylisés) -->
+      <g opacity="0.8">
+        <!-- Olivier 1 -->
+        <line x1="120" y1="410" x2="120" y2="380" stroke="#3a2a1a" stroke-width="4"/>
+        <circle cx="115" cy="375" r="12" fill="#4a5a3a"/>
+        <circle cx="128" cy="370" r="10" fill="#5C6B3C"/>
+        <circle cx="118" cy="365" r="8" fill="#6a7a5a"/>
+
+        <!-- Olivier 2 -->
+        <line x1="680" y1="400" x2="680" y2="365" stroke="#3a2a1a" stroke-width="4"/>
+        <circle cx="675" cy="360" r="13" fill="#4a5a3a"/>
+        <circle cx="688" cy="355" r="11" fill="#5C6B3C"/>
+        <circle cx="678" cy="350" r="9" fill="#6a7a5a"/>
+
+        <!-- Olivier 3 petit -->
+        <line x1="350" y1="395" x2="350" y2="375" stroke="#3a2a1a" stroke-width="3"/>
+        <circle cx="347" cy="370" r="8" fill="#4a5a3a"/>
+        <circle cx="355" cy="367" r="7" fill="#5C6B3C"/>
+      </g>
+
+      <!-- Village au loin (silhouettes de maisons kabyles) -->
+      <g opacity="0.6">
+        <rect x="260" y="370" width="12" height="15" fill="#8a7a6a" rx="1"/>
+        <rect x="275" y="365" width="10" height="20" fill="#7a6a5a" rx="1"/>
+        <rect x="288" y="368" width="14" height="17" fill="#8a7a6a" rx="1"/>
+        <rect x="305" y="372" width="11" height="13" fill="#7a6a5a" rx="1"/>
+        <rect x="318" y="366" width="13" height="19" fill="#8a7a6a" rx="1"/>
+        <!-- Toits -->
+        <path d="M258 370 L266 362 L274 370" fill="#9a5a3a" opacity="0.7"/>
+        <path d="M273 365 L280 357 L287 365" fill="#9a5a3a" opacity="0.7"/>
+        <path d="M286 368 L295 358 L304 368" fill="#9a5a3a" opacity="0.7"/>
+        <path d="M316 366 L324.5 356 L333 366" fill="#9a5a3a" opacity="0.7"/>
+      </g>
+
+      <!-- Oiseaux -->
+      <g stroke="#1a1a3e" stroke-width="1.5" fill="none" opacity="0.5">
+        <path d="M300 100 Q305 95 310 100 Q315 95 320 100"/>
+        <path d="M500 120 Q504 116 508 120 Q512 116 516 120"/>
+        <path d="M180 130 Q183 127 186 130 Q189 127 192 130"/>
+      </g>
+
+      <!-- Texte narratif -->
+      <rect x="50" y="440" width="700" height="50" rx="4" fill="#1a1a1a" opacity="0.8"/>
+      <text x="400" y="462" text-anchor="middle" font-family="'Lora', serif" font-size="16" fill="#C4843A" font-weight="700">
+        Quelque part dans les montagnes du Djurdjura...
+      </text>
+      <text x="400" y="480" text-anchor="middle" font-family="'Inter', sans-serif" font-size="12" fill="#5C6B3C">
+        ⴳ ⵉⴷⵓⵔⴰⵔ ⵏ ⴵⵓⵔⴵⵓⵔⴰ...
+      </text>
+
+      <!-- Bordure berbère -->
+      <rect x="0" y="0" width="800" height="8" fill="url(#berber-border)"/>
+      <rect x="0" y="492" width="800" height="8" fill="url(#berber-border)"/>
+    </svg>
+    <div class="panel-caption">
+      <span class="kabyle">ⴰⵣⵓⵍ</span> — L'aube se lève sur les montagnes du Djurdjura. Un village perché défie le temps... et les envahisseurs.
+    </div>
+  </div>
+
+  <!-- PANEL 2 : Le village de Taddart -->
+  <div class="panel">
+    <div class="panel-number">2</div>
+    <svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#4A7C9B"/>
+          <stop offset="100%" stop-color="#87CEEB"/>
+        </linearGradient>
+        <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#E8D5B0"/>
+          <stop offset="100%" stop-color="#D4C09A"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Ciel -->
+      <rect width="800" height="500" fill="url(#sky2)"/>
+
+      <!-- Montagne en fond -->
+      <path d="M-50 200 L200 80 L400 150 L600 60 L850 180 L850 300 L-50 300Z" fill="#6a8a7a" opacity="0.3"/>
+
+      <!-- Sol / terre -->
+      <rect x="0" y="320" width="800" height="180" fill="#8B7355" rx="0"/>
+      <path d="M0 320 Q200 310 400 325 Q600 335 800 318 L800 340 Q600 350 400 340 Q200 330 0 340Z" fill="#9B8365"/>
+
+      <!-- Maison kabyle principale (grande) -->
+      <rect x="250" y="180" width="160" height="140" fill="url(#wall)" rx="3"/>
+      <!-- Porte -->
+      <rect x="305" y="250" width="45" height="70" rx="22" fill="#5a3a2a"/>
+      <circle cx="342" cy="290" r="3" fill="#C4843A"/>
+      <!-- Fenêtres -->
+      <rect x="268" y="205" width="30" height="25" rx="2" fill="#4A7C9B" opacity="0.5"/>
+      <line x1="283" y1="205" x2="283" y2="230" stroke="#D4C09A" stroke-width="2"/>
+      <line x1="268" y1="217" x2="298" y2="217" stroke="#D4C09A" stroke-width="2"/>
+      <rect x="362" y="205" width="30" height="25" rx="2" fill="#4A7C9B" opacity="0.5"/>
+      <line x1="377" y1="205" x2="377" y2="230" stroke="#D4C09A" stroke-width="2"/>
+      <!-- Toit en tuiles -->
+      <path d="M235 180 L330 130 L425 180Z" fill="#9a5a3a"/>
+      <path d="M240 180 L330 135 L420 180" fill="none" stroke="#7a4a2a" stroke-width="1"/>
+      <!-- Motif berbère sur la façade -->
+      <g opacity="0.4">
+        <path d="M270 245 L280 235 L290 245 L280 255Z" fill="#C4843A"/>
+        <path d="M370 245 L380 235 L390 245 L380 255Z" fill="#C4843A"/>
+      </g>
+
+      <!-- Maison 2 (gauche, plus petite) -->
+      <rect x="80" y="220" width="120" height="100" fill="#DCC89E" rx="3"/>
+      <rect x="120" y="260" width="35" height="60" rx="17" fill="#5a3a2a"/>
+      <circle cx="148" cy="295" r="2.5" fill="#C4843A"/>
+      <path d="M68 220 L140 178 L212 220Z" fill="#8a4a2a"/>
+      <rect x="92" y="238" width="22" height="18" rx="2" fill="#4A7C9B" opacity="0.4"/>
+
+      <!-- Maison 3 (droite) -->
+      <rect x="460" y="200" width="140" height="120" fill="#E0CCA2" rx="3"/>
+      <rect x="510" y="260" width="40" height="60" rx="20" fill="#5a3a2a"/>
+      <circle cx="542" cy="295" r="2.5" fill="#C4843A"/>
+      <path d="M448 200 L530 155 L612 200Z" fill="#9a5a3a"/>
+      <rect x="475" y="220" width="25" height="20" rx="2" fill="#4A7C9B" opacity="0.4"/>
+      <rect x="560" y="220" width="25" height="20" rx="2" fill="#4A7C9B" opacity="0.4"/>
+
+      <!-- Maison 4 (fond droite) -->
+      <rect x="620" y="230" width="100" height="90" fill="#D8C494" rx="3"/>
+      <rect x="655" y="270" width="30" height="50" rx="15" fill="#5a3a2a"/>
+      <path d="M612 230 L670 195 L728 230Z" fill="#8a4a2a"/>
+
+      <!-- Olivier sacré (grand, au centre) -->
+      <line x1="400" y1="340" x2="395" y2="280" stroke="#5a3a1a" stroke-width="8" stroke-linecap="round"/>
+      <line x1="395" y1="300" x2="370" y2="270" stroke="#5a3a1a" stroke-width="5" stroke-linecap="round"/>
+      <line x1="395" y1="295" x2="420" y2="265" stroke="#5a3a1a" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="385" cy="260" r="22" fill="#5C6B3C"/>
+      <circle cx="405" cy="250" r="20" fill="#6a7a4a"/>
+      <circle cx="370" cy="265" r="15" fill="#4a5a3a"/>
+      <circle cx="420" cy="260" r="16" fill="#5C6B3C"/>
+      <circle cx="395" cy="245" r="14" fill="#7a8a5a"/>
+      <!-- Lueur magique -->
+      <circle cx="395" cy="255" r="30" fill="#FFD700" opacity="0.1"/>
+      <circle cx="395" cy="255" r="18" fill="#FFD700" opacity="0.08"/>
+
+      <!-- Chemin de terre -->
+      <path d="M330 500 Q340 400 330 340 Q350 330 400 335 Q450 330 470 340 Q460 400 470 500" fill="#7a6345" opacity="0.6"/>
+
+      <!-- Personnage silhouette (Ameziane de dos, marchant vers le village) -->
+      <g transform="translate(395, 400)">
+        <!-- Corps -->
+        <ellipse cx="0" cy="-25" rx="12" ry="20" fill="#3a2a1a"/>
+        <!-- Burnous -->
+        <path d="M-14 -15 L-18 15 L18 15 L14 -15" fill="#8B7355"/>
+        <path d="M-14 -15 Q0 -20 14 -15" fill="#8B7355"/>
+        <!-- Tête -->
+        <circle cx="0" cy="-42" r="10" fill="#C4843A" opacity="0.8"/>
+        <!-- Bâton (aɛekkaz) -->
+        <line x1="16" y1="-35" x2="22" y2="20" stroke="#5a3a1a" stroke-width="3" stroke-linecap="round"/>
+      </g>
+
+      <!-- Bulle panneau "Bienvenue" -->
+      <g>
+        <rect x="480" y="340" width="250" height="50" rx="8" fill="white" opacity="0.95"/>
+        <polygon points="478,365 490,355 490,375" fill="white" opacity="0.95"/>
+        <text x="605" y="360" text-anchor="middle" font-family="'Lora', serif" font-size="14" fill="#1a1a1a" font-weight="700">
+          ⴱⵔⵓ ⴰⴹ ⴷ ⵜⴰⴷⴷⴰⵔⵜ ⵏ ⵢⵉⴷⵓⵔⴰⵔ
+        </text>
+        <text x="605" y="380" text-anchor="middle" font-family="'Inter', sans-serif" font-size="11" fill="#5C6B3C">
+          Bienvenue à Taddart n Yidurar !
+        </text>
+      </g>
+
+      <!-- Poules -->
+      <g opacity="0.7">
+        <ellipse cx="180" cy="345" rx="6" ry="4" fill="#C4843A"/>
+        <circle cx="186" cy="341" r="3" fill="#C4843A"/>
+        <circle cx="188" cy="340" r="1" fill="#1a1a1a"/>
+        <ellipse cx="220" cy="350" rx="5" ry="3.5" fill="#8B7355"/>
+        <circle cx="225" cy="347" r="2.5" fill="#8B7355"/>
+      </g>
+
+      <!-- Bordure berbère -->
+      <rect x="0" y="0" width="800" height="8" fill="url(#berber-border)"/>
+      <rect x="0" y="492" width="800" height="8" fill="url(#berber-border)"/>
+    </svg>
+    <div class="panel-caption">
+      <span class="kabyle">ⵜⴰⴷⴷⴰⵔⵜ ⵏ ⵢⵉⴷⵓⵔⴰⵔ</span> — Taddart n Yidurar, le village perché. Son olivier millénaire veille sur ses habitants depuis toujours.
+    </div>
+  </div>
+
+  <!-- PANEL 3 : Ameziane à la forge -->
+  <div class="panel">
+    <div class="panel-number">3</div>
+    <svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="fireGlow" cx="0.3" cy="0.6" r="0.5">
+          <stop offset="0%" stop-color="#FF6B00" stop-opacity="0.4"/>
+          <stop offset="50%" stop-color="#C4843A" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="#1a1008" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="ember" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0%" stop-color="#FFD700"/>
+          <stop offset="50%" stop-color="#FF6B00"/>
+          <stop offset="100%" stop-color="#FF4500" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <!-- Fond sombre de la forge -->
+      <rect width="800" height="500" fill="#1a1008"/>
+      <rect width="800" height="500" fill="url(#fireGlow)"/>
+
+      <!-- Murs de pierre -->
+      <g opacity="0.3">
+        <rect x="0" y="0" width="800" height="500" fill="none" stroke="#3a3020" stroke-width="1"/>
+        <!-- Pierres du mur -->
+        <rect x="0" y="0" width="120" height="60" fill="none" stroke="#2a2518" stroke-width="1" rx="2"/>
+        <rect x="120" y="0" width="90" height="55" fill="none" stroke="#2a2518" stroke-width="1" rx="2"/>
+        <rect x="0" y="60" width="100" height="50" fill="none" stroke="#2a2518" stroke-width="1" rx="2"/>
+        <rect x="680" y="0" width="120" height="55" fill="none" stroke="#2a2518" stroke-width="1" rx="2"/>
+        <rect x="700" y="55" width="100" height="60" fill="none" stroke="#2a2518" stroke-width="1" rx="2"/>
+      </g>
+
+      <!-- Forge / foyer -->
+      <rect x="100" y="280" width="200" height="120" rx="8" fill="#3a2a1a"/>
+      <rect x="110" y="290" width="180" height="80" rx="5" fill="#2a1a0a"/>
+      <!-- Braises -->
+      <circle cx="160" cy="340" r="15" fill="url(#ember)" opacity="0.9"/>
+      <circle cx="200" cy="335" r="18" fill="url(#ember)" opacity="0.8"/>
+      <circle cx="240" cy="342" r="12" fill="url(#ember)" opacity="0.7"/>
+      <circle cx="180" cy="350" r="10" fill="#FF6B00" opacity="0.6"/>
+      <!-- Flammes -->
+      <path d="M170 330 Q175 290 185 310 Q190 280 200 305 Q210 275 215 310 Q225 285 230 320" fill="none" stroke="#FF6B00" stroke-width="3" opacity="0.8"/>
+      <path d="M180 325 Q188 295 195 315 Q205 285 210 315" fill="#FFD700" opacity="0.3"/>
+
+      <!-- Étincelles -->
+      <circle cx="190" cy="270" r="2" fill="#FFD700" opacity="0.9"/>
+      <circle cx="210" cy="260" r="1.5" fill="#FF6B00" opacity="0.7"/>
+      <circle cx="175" cy="250" r="1" fill="#FFD700" opacity="0.6"/>
+      <circle cx="225" cy="245" r="1.5" fill="#FF6B00" opacity="0.8"/>
+      <circle cx="195" cy="240" r="1" fill="#FFD700" opacity="0.5"/>
+      <circle cx="160" cy="265" r="1.2" fill="#FFD700" opacity="0.7"/>
+
+      <!-- Enclume -->
+      <g transform="translate(380, 320)">
+        <path d="M-30 0 L30 0 L40 -10 L35 -15 L-35 -15 L-40 -10Z" fill="#4a4a4a"/>
+        <rect x="-20" y="0" width="40" height="40" fill="#3a3a3a"/>
+        <rect x="-30" y="40" width="60" height="10" fill="#4a4a4a" rx="2"/>
+        <!-- Lame rougeoyante sur l'enclume -->
+        <rect x="-25" y="-20" width="50" height="5" rx="1" fill="#FF6B00" opacity="0.9"/>
+        <rect x="-25" y="-20" width="50" height="5" rx="1" fill="#FFD700" opacity="0.4"/>
+      </g>
+
+      <!-- AMEZIANE -->
+      <g transform="translate(450, 200)">
+        <!-- Jambes -->
+        <rect x="-12" y="80" width="10" height="50" fill="#5a3a2a" rx="3"/>
+        <rect x="2" y="80" width="10" height="50" fill="#4a2a1a" rx="3"/>
+        <!-- Pieds -->
+        <ellipse cx="-7" cy="132" rx="8" ry="4" fill="#3a2a1a"/>
+        <ellipse cx="7" cy="132" rx="8" ry="4" fill="#3a2a1a"/>
+        <!-- Corps / tunique -->
+        <path d="M-20 30 Q-25 80 -18 100 L18 100 Q25 80 20 30Z" fill="#8B7355"/>
+        <path d="M-18 30 Q-22 75 -15 95 L15 95 Q22 75 18 30Z" fill="#9B8365"/>
+        <!-- Ceinture -->
+        <rect x="-18" y="65" width="36" height="6" rx="2" fill="#5a3a1a"/>
+        <circle cx="0" cy="68" r="4" fill="#C4843A"/>
+        <!-- Bras droit (tenant le marteau, levé) -->
+        <path d="M18 40 Q35 20 45 -10 Q50 -20 48 -25" stroke="#C4843A" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.85"/>
+        <!-- Main -->
+        <circle cx="48" cy="-25" r="5" fill="#C4843A" opacity="0.85"/>
+        <!-- Marteau -->
+        <line x1="48" y1="-25" x2="48" y2="-60" stroke="#5a4a3a" stroke-width="4" stroke-linecap="round"/>
+        <rect x="38" y="-70" width="20" height="14" rx="2" fill="#4a4a4a"/>
+        <!-- Bras gauche (tenant pince) -->
+        <path d="M-18 40 Q-35 60 -50 80" stroke="#C4843A" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.85"/>
+        <circle cx="-50" cy="80" r="5" fill="#C4843A" opacity="0.85"/>
+
+        <!-- Tête -->
+        <circle cx="0" cy="15" r="18" fill="#C4843A" opacity="0.9"/>
+        <!-- Cheveux noirs -->
+        <path d="M-16 8 Q-18 -5 -10 -8 Q0 -12 10 -8 Q18 -5 16 8" fill="#1a1a1a"/>
+        <!-- Yeux (éclairés par le feu) -->
+        <ellipse cx="-6" cy="14" rx="3" ry="3.5" fill="white"/>
+        <circle cx="-5" cy="14" r="2" fill="#1a1a1a"/>
+        <circle cx="-4.5" cy="13.5" r="0.8" fill="#FF6B00" opacity="0.6"/>
+        <ellipse cx="6" cy="14" rx="3" ry="3.5" fill="white"/>
+        <circle cx="7" cy="14" r="2" fill="#1a1a1a"/>
+        <circle cx="7.5" cy="13.5" r="0.8" fill="#FF6B00" opacity="0.6"/>
+        <!-- Nez -->
+        <path d="M0 16 L2 21 L-1 21" fill="#B0743A" opacity="0.5"/>
+        <!-- Sourire déterminé -->
+        <path d="M-5 24 Q0 28 5 24" stroke="#8a5a3a" stroke-width="1.5" fill="none"/>
+        <!-- Sourcils froncés (concentration) -->
+        <line x1="-10" y1="8" x2="-3" y2="10" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"/>
+        <line x1="3" y1="10" x2="10" y2="8" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"/>
+        <!-- Sueur -->
+        <path d="M14 10 Q16 15 14 18" stroke="#87CEEB" stroke-width="1.5" fill="none" opacity="0.6"/>
+      </g>
+
+      <!-- Outils accrochés au mur -->
+      <g opacity="0.4" transform="translate(620, 100)">
+        <!-- Marteau -->
+        <line x1="0" y1="0" x2="0" y2="40" stroke="#5a4a3a" stroke-width="3"/>
+        <rect x="-10" y="35" width="20" height="12" rx="2" fill="#4a4a4a"/>
+        <!-- Pince -->
+        <line x1="40" y1="0" x2="40" y2="30" stroke="#5a4a3a" stroke-width="2"/>
+        <path d="M35 30 L40 45 L45 30" stroke="#4a4a4a" stroke-width="2" fill="none"/>
+        <!-- Lame -->
+        <line x1="80" y1="0" x2="80" y2="45" stroke="#6a6a6a" stroke-width="2"/>
+        <path d="M75 10 L80 45 L85 10" fill="#5a5a5a" opacity="0.5"/>
+      </g>
+
+      <!-- Bulle de dialogue -->
+      <g>
+        <rect x="480" y="60" width="280" height="65" rx="12" fill="white" opacity="0.95"/>
+        <polygon points="478,95 495,88 495,108" fill="white" opacity="0.95"/>
+        <text x="620" y="82" text-anchor="middle" font-family="'Inter', sans-serif" font-size="15" fill="#1a1a1a" font-weight="600">
+          Cette lame sera différente...
+        </text>
+        <text x="620" y="105" text-anchor="middle" font-family="'Inter', sans-serif" font-size="12" fill="#5C6B3C" font-style="italic">
+          ⵜⴰⵊⵏⴰⵡⵜ-ⴰ ⴰⴷ ⵜⵉⵍⵉ ⵎⵛⵜⵓⵃⴻⵜ...
+        </text>
+      </g>
+
+      <!-- Fumée -->
+      <g opacity="0.15">
+        <circle cx="190" cy="200" r="20" fill="#aaa"/>
+        <circle cx="180" cy="170" r="25" fill="#999"/>
+        <circle cx="195" cy="140" r="22" fill="#888"/>
+        <circle cx="185" cy="110" r="28" fill="#777"/>
+      </g>
+
+      <!-- Bordure berbère -->
+      <rect x="0" y="0" width="800" height="8" fill="url(#berber-border)"/>
+      <rect x="0" y="492" width="800" height="8" fill="url(#berber-border)"/>
+    </svg>
+    <div class="panel-caption">
+      <span class="kabyle">ⴰⵎⴻⵣⵢⴰⵏ</span> — Ameziane forge dans l'ombre. La lueur des braises danse sur son visage concentré.
+    </div>
+  </div>
+
+</div>
+
+<!-- SECTION PERSONNAGES -->
+<h2 class="section-title">Personnages principaux</h2>
+<p class="tifinagh-deco" style="text-align:center; margin-bottom: 30px;">ⵣ ⵣ ⵣ</p>
+
+<div class="character-grid">
+
+  <!-- AMEZIANE -->
+  <div class="character-card">
+    <svg viewBox="0 0 250 300" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="charBg1" cx="0.5" cy="0.4" r="0.6">
+          <stop offset="0%" stop-color="#3a3020"/>
+          <stop offset="100%" stop-color="#1a1a1a"/>
+        </radialGradient>
+      </defs>
+      <rect width="250" height="300" fill="url(#charBg1)"/>
+
+      <!-- Corps -->
+      <g transform="translate(125, 150)">
+        <!-- Jambes -->
+        <rect x="-15" y="60" width="12" height="55" fill="#5a4a3a" rx="4"/>
+        <rect x="3" y="60" width="12" height="55" fill="#4a3a2a" rx="4"/>
+        <!-- Sandales -->
+        <ellipse cx="-9" cy="117" rx="10" ry="5" fill="#3a2a1a"/>
+        <ellipse cx="9" cy="117" rx="10" ry="5" fill="#3a2a1a"/>
+
+        <!-- Burnous -->
+        <path d="M-30 -10 L-35 80 Q0 90 35 80 L30 -10Z" fill="#8B7355"/>
+        <path d="M-28 -10 L-32 75 Q0 85 32 75 L28 -10Z" fill="#9B8365"/>
+        <!-- Capuche (baissée) -->
+        <path d="M-22 -10 Q0 -5 22 -10 Q25 -18 20 -25 Q0 -30 -20 -25 Q-25 -18 -22 -10" fill="#8B7355"/>
+        <!-- Ceinture -->
+        <rect x="-25" y="30" width="50" height="7" rx="3" fill="#5a3a1a"/>
+        <circle cx="0" cy="33" r="5" fill="#C4843A"/>
+        <!-- Motif losange sur burnous -->
+        <path d="M0 5 L8 15 L0 25 L-8 15Z" stroke="#C4843A" stroke-width="1" fill="none" opacity="0.5"/>
+
+        <!-- Tête -->
+        <circle cx="0" cy="-40" r="22" fill="#C4843A" opacity="0.9"/>
+        <!-- Cheveux épais noirs -->
+        <path d="M-20 -48 Q-22 -65 -12 -68 Q0 -72 12 -68 Q22 -65 20 -48 Q15 -52 0 -54 Q-15 -52 -20 -48" fill="#1a1a1a"/>
+        <!-- Yeux vifs -->
+        <ellipse cx="-7" cy="-42" rx="4" ry="4.5" fill="white"/>
+        <circle cx="-6" cy="-42" r="2.5" fill="#2a1a0a"/>
+        <circle cx="-5.5" cy="-43" r="1" fill="white"/>
+        <ellipse cx="7" cy="-42" rx="4" ry="4.5" fill="white"/>
+        <circle cx="8" cy="-42" r="2.5" fill="#2a1a0a"/>
+        <circle cx="8.5" cy="-43" r="1" fill="white"/>
+        <!-- Sourcils expressifs -->
+        <path d="M-12 -50 Q-7 -52 -3 -49" stroke="#1a1a1a" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M3 -49 Q7 -52 12 -50" stroke="#1a1a1a" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <!-- Nez -->
+        <path d="M0 -40 L3 -34 L-1 -34" fill="#B0743A" opacity="0.4"/>
+        <!-- Grand sourire malicieux -->
+        <path d="M-8 -30 Q0 -24 8 -30" stroke="#7a4a2a" stroke-width="2" fill="none"/>
+        <!-- Oreilles -->
+        <ellipse cx="-21" cy="-40" rx="4" ry="6" fill="#B8743A" opacity="0.8"/>
+        <ellipse cx="21" cy="-40" rx="4" ry="6" fill="#B8743A" opacity="0.8"/>
+
+        <!-- Bâton (aɛekkaz) -->
+        <line x1="35" y1="-30" x2="42" y2="100" stroke="#5a3a1a" stroke-width="5" stroke-linecap="round"/>
+        <!-- Main sur le bâton -->
+        <circle cx="37" cy="10" r="6" fill="#C4843A" opacity="0.85"/>
+      </g>
+    </svg>
+    <div class="character-info">
+      <h3>Ameziane</h3>
+      <div class="tifinagh">ⴰⵎⴻⵣⵢⴰⵏ</div>
+      <p>Le héros. Jeune, malin, petit mais costaud. Burnous et bâton de berger (aɛekkaz). N'a peur de rien sauf du couscous de Nna Wardia.</p>
+    </div>
+  </div>
+
+  <!-- GAYA -->
+  <div class="character-card">
+    <svg viewBox="0 0 250 300" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="charBg2" cx="0.5" cy="0.4" r="0.6">
+          <stop offset="0%" stop-color="#2a3520"/>
+          <stop offset="100%" stop-color="#1a1a1a"/>
+        </radialGradient>
+      </defs>
+      <rect width="250" height="300" fill="url(#charBg2)"/>
+
+      <!-- Corps GAYA (massif) -->
+      <g transform="translate(125, 145)">
+        <!-- Jambes (larges) -->
+        <rect x="-22" y="55" width="18" height="50" fill="#5a4a3a" rx="5"/>
+        <rect x="4" y="55" width="18" height="50" fill="#4a3a2a" rx="5"/>
+        <!-- Pieds larges -->
+        <ellipse cx="-13" cy="107" rx="14" ry="6" fill="#3a2a1a"/>
+        <ellipse cx="13" cy="107" rx="14" ry="6" fill="#3a2a1a"/>
+
+        <!-- Corps massif -->
+        <path d="M-40 -15 L-45 75 Q0 85 45 75 L40 -15Z" fill="#5C6B3C"/>
+        <path d="M-37 -15 L-42 70 Q0 80 42 70 L37 -15Z" fill="#6a7a4a"/>
+        <!-- Ceinture large -->
+        <rect x="-35" y="25" width="70" height="10" rx="4" fill="#5a3a1a"/>
+        <circle cx="0" cy="30" r="6" fill="#C4843A"/>
+
+        <!-- Bras (épais) -->
+        <path d="M-40 0 Q-55 20 -60 45" stroke="#C4843A" stroke-width="14" fill="none" stroke-linecap="round" opacity="0.85"/>
+        <circle cx="-60" cy="48" r="8" fill="#C4843A" opacity="0.85"/>
+        <path d="M40 0 Q55 20 60 45" stroke="#C4843A" stroke-width="14" fill="none" stroke-linecap="round" opacity="0.85"/>
+        <circle cx="60" cy="48" r="8" fill="#C4843A" opacity="0.85"/>
+        <!-- Cuisse de poulet dans la main droite -->
+        <path d="M58 38 Q70 30 78 25" stroke="#D4A574" stroke-width="6" stroke-linecap="round"/>
+        <ellipse cx="80" cy="22" rx="8" ry="5" fill="#D4A574"/>
+
+        <!-- Tête (ronde, plus grosse) -->
+        <circle cx="0" cy="-35" r="28" fill="#C4843A" opacity="0.9"/>
+        <!-- Cheveux ras -->
+        <path d="M-25 -45 Q-28 -65 -15 -68 Q0 -72 15 -68 Q28 -65 25 -45" fill="#1a1a1a"/>
+        <!-- Yeux ronds et joyeux -->
+        <ellipse cx="-9" cy="-37" rx="5" ry="5.5" fill="white"/>
+        <circle cx="-8" cy="-37" r="3" fill="#2a1a0a"/>
+        <circle cx="-7.5" cy="-38" r="1.2" fill="white"/>
+        <ellipse cx="9" cy="-37" rx="5" ry="5.5" fill="white"/>
+        <circle cx="10" cy="-37" r="3" fill="#2a1a0a"/>
+        <circle cx="10.5" cy="-38" r="1.2" fill="white"/>
+        <!-- Sourcils joyeux -->
+        <path d="M-15 -46 Q-9 -48 -4 -45" stroke="#1a1a1a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M4 -45 Q9 -48 15 -46" stroke="#1a1a1a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <!-- Gros nez rond -->
+        <ellipse cx="0" cy="-30" rx="5" ry="4" fill="#B8743A" opacity="0.5"/>
+        <!-- Grand sourire -->
+        <path d="M-12 -22 Q0 -14 12 -22" stroke="#7a4a2a" stroke-width="2.5" fill="#fff" fill-opacity="0.2"/>
+        <!-- Joues roses -->
+        <circle cx="-18" cy="-28" r="5" fill="#D4843A" opacity="0.3"/>
+        <circle cx="18" cy="-28" r="5" fill="#D4843A" opacity="0.3"/>
+        <!-- Oreilles -->
+        <ellipse cx="-27" cy="-35" rx="5" ry="7" fill="#B8743A" opacity="0.8"/>
+        <ellipse cx="27" cy="-35" rx="5" ry="7" fill="#B8743A" opacity="0.8"/>
+      </g>
+    </svg>
+    <div class="character-info">
+      <h3>Gaya</h3>
+      <div class="tifinagh">ⴳⴰⵢⴰ</div>
+      <p>Le colosse. Tombé dans la jarre d'huile d'olive magique étant bébé. Force surhumaine. Mange constamment. Cœur d'or, cerveau... en option.</p>
+    </div>
+  </div>
+
+  <!-- TASSADIT -->
+  <div class="character-card">
+    <svg viewBox="0 0 250 300" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="charBg3" cx="0.5" cy="0.4" r="0.6">
+          <stop offset="0%" stop-color="#3a2028"/>
+          <stop offset="100%" stop-color="#1a1a1a"/>
+        </radialGradient>
+      </defs>
+      <rect width="250" height="300" fill="url(#charBg3)"/>
+
+      <!-- TASSADIT (guerrière) -->
+      <g transform="translate(125, 150)">
+        <!-- Jambes -->
+        <rect x="-12" y="55" width="10" height="50" fill="#5a3a3a" rx="3"/>
+        <rect x="2" y="55" width="10" height="50" fill="#4a2a2a" rx="3"/>
+        <!-- Bottes -->
+        <path d="M-14 100 L-14 108 L2 108 L2 100" fill="#3a2a1a"/>
+        <path d="M0 100 L0 108 L16 108 L16 100" fill="#3a2a1a"/>
+
+        <!-- Robe guerrière -->
+        <path d="M-25 -5 L-28 70 Q0 80 28 70 L25 -5Z" fill="#8B4040"/>
+        <path d="M-22 -5 L-25 65 Q0 75 25 65 L22 -5Z" fill="#9B5050"/>
+        <!-- Armure légère -->
+        <path d="M-18 -5 L-15 25 Q0 30 15 25 L18 -5Z" fill="#6a5a4a" opacity="0.6"/>
+        <!-- Ceinture avec poignard -->
+        <rect x="-22" y="28" width="44" height="6" rx="2" fill="#5a3a1a"/>
+        <rect x="12" y="24" width="4" height="16" rx="1" fill="#6a6a6a"/>
+        <rect x="11" y="22" width="6" height="4" rx="1" fill="#8a7a5a"/>
+
+        <!-- Bras -->
+        <path d="M-25 0 Q-40 15 -45 35" stroke="#C4843A" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.85"/>
+        <circle cx="-45" cy="38" r="5" fill="#C4843A" opacity="0.85"/>
+        <path d="M25 0 Q35 -10 50 -30" stroke="#C4843A" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.85"/>
+        <circle cx="50" cy="-32" r="5" fill="#C4843A" opacity="0.85"/>
+
+        <!-- Épée (tenue haute) -->
+        <line x1="50" y1="-32" x2="55" y2="-80" stroke="#8a8a8a" stroke-width="3"/>
+        <line x1="55" y1="-80" x2="55" y2="-100" stroke="#aaa" stroke-width="2.5"/>
+        <line x1="47" y1="-78" x2="63" y2="-82" stroke="#7a6a4a" stroke-width="3"/>
+        <circle cx="55" cy="-100" r="2" fill="#C4843A"/>
+
+        <!-- Bouclier (bras gauche) -->
+        <circle cx="-48" cy="30" r="20" fill="#5a4a3a" stroke="#C4843A" stroke-width="2"/>
+        <circle cx="-48" cy="30" r="12" fill="none" stroke="#C4843A" stroke-width="1" opacity="0.5"/>
+        <!-- Motif ⵣ (Yaz) sur le bouclier -->
+        <text x="-48" y="36" text-anchor="middle" font-size="18" fill="#C4843A" opacity="0.8">ⵣ</text>
+
+        <!-- Tête -->
+        <circle cx="0" cy="-28" r="20" fill="#C4843A" opacity="0.9"/>
+        <!-- Cheveux longs noirs -->
+        <path d="M-18 -35 Q-22 -55 -12 -55 Q0 -58 12 -55 Q22 -55 18 -35" fill="#1a1a1a"/>
+        <path d="M-18 -35 Q-25 -20 -28 10" stroke="#1a1a1a" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <path d="M18 -35 Q25 -20 28 10" stroke="#1a1a1a" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <!-- Bandeau -->
+        <rect x="-20" y="-42" width="40" height="5" rx="2" fill="#C4843A"/>
+        <!-- Yeux perçants -->
+        <ellipse cx="-7" cy="-30" rx="3.5" ry="4" fill="white"/>
+        <circle cx="-6" cy="-30" r="2.2" fill="#2a1a0a"/>
+        <circle cx="-5.5" cy="-31" r="0.8" fill="white"/>
+        <ellipse cx="7" cy="-30" rx="3.5" ry="4" fill="white"/>
+        <circle cx="8" cy="-30" r="2.2" fill="#2a1a0a"/>
+        <circle cx="8.5" cy="-31" r="0.8" fill="white"/>
+        <!-- Sourcils déterminés -->
+        <line x1="-11" y1="-37" x2="-4" y2="-36" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"/>
+        <line x1="4" y1="-36" x2="11" y2="-37" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"/>
+        <!-- Nez fin -->
+        <path d="M0 -28 L2 -22 L-1 -22" fill="#B0743A" opacity="0.4"/>
+        <!-- Sourire confiant -->
+        <path d="M-5 -17 Q0 -14 5 -17" stroke="#7a4a2a" stroke-width="1.5" fill="none"/>
+        <!-- Boucles d'oreilles -->
+        <circle cx="-20" cy="-22" r="3" fill="#FFD700" opacity="0.7"/>
+        <circle cx="20" cy="-22" r="3" fill="#FFD700" opacity="0.7"/>
+      </g>
+    </svg>
+    <div class="character-info">
+      <h3>Tassadit</h3>
+      <div class="tifinagh">ⵜⴰⵙⵙⴰⴷⵉⵜ</div>
+      <p>La guerrière. Inspirée de la reine Dihya (Kahina). Épée, bouclier avec le Yaz ⵣ. Directe et redoutable. « Je ne négocie pas. »</p>
+    </div>
+  </div>
+
+  <!-- JEDDI MOHAND -->
+  <div class="character-card">
+    <svg viewBox="0 0 250 300" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="charBg4" cx="0.5" cy="0.4" r="0.6">
+          <stop offset="0%" stop-color="#2a2a30"/>
+          <stop offset="100%" stop-color="#1a1a1a"/>
+        </radialGradient>
+      </defs>
+      <rect width="250" height="300" fill="url(#charBg4)"/>
+
+      <!-- JEDDI MOHAND (sage ancien) -->
+      <g transform="translate(125, 150)">
+        <!-- Jambes -->
+        <rect x="-12" y="60" width="10" height="45" fill="#4a4a3a" rx="3"/>
+        <rect x="2" y="60" width="10" height="45" fill="#3a3a2a" rx="3"/>
+        <!-- Babouches -->
+        <path d="M-15 102 Q-10 97 0 102 L-15 107Z" fill="#8B7355"/>
+        <path d="M0 102 Q10 97 15 102 L0 107Z" fill="#8B7355"/>
+
+        <!-- Grande djellaba blanche -->
+        <path d="M-30 -15 L-35 85 Q0 95 35 85 L30 -15Z" fill="#E8E0D0"/>
+        <path d="M-27 -15 L-32 80 Q0 90 32 80 L27 -15Z" fill="#F0E8D8"/>
+        <!-- Burnous par dessus -->
+        <path d="M-32 -10 L-28 40 Q0 45 28 40 L32 -10Z" fill="#D4C09A" opacity="0.6"/>
+        <!-- Ceinture simple -->
+        <rect x="-25" y="30" width="50" height="5" rx="2" fill="#8B7355"/>
+
+        <!-- Canne / bâton noueux -->
+        <path d="M-40 -20 Q-42 30 -38 100" stroke="#5a3a1a" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="-40" cy="-22" r="5" fill="#5a3a1a"/>
+        <!-- Main sur la canne -->
+        <circle cx="-38" cy="20" r="6" fill="#B8743A" opacity="0.8"/>
+
+        <!-- Tête (vieux, ridé) -->
+        <circle cx="0" cy="-35" r="22" fill="#B8743A" opacity="0.85"/>
+        <!-- Barbe blanche longue -->
+        <path d="M-15 -22 Q-18 0 -12 20 Q0 28 12 20 Q18 0 15 -22" fill="#E8E0D0"/>
+        <path d="M-12 -22 Q-15 -2 -8 15 Q0 22 8 15 Q15 -2 12 -22" fill="#F0E8D8"/>
+        <!-- Chéchia (taqiyyah) -->
+        <path d="M-18 -45 Q-20 -62 0 -65 Q20 -62 18 -45" fill="#E8E0D0"/>
+        <rect x="-18" y="-47" width="36" height="5" rx="2" fill="#D4C09A"/>
+        <!-- Yeux sages (mi-clos) -->
+        <path d="M-10 -37 Q-7 -40 -4 -37" stroke="#2a1a0a" stroke-width="2" fill="none"/>
+        <path d="M4 -37 Q7 -40 10 -37" stroke="#2a1a0a" stroke-width="2" fill="none"/>
+        <!-- Petits yeux dessous -->
+        <circle cx="-7" cy="-36" r="1.5" fill="#2a1a0a"/>
+        <circle cx="7" cy="-36" r="1.5" fill="#2a1a0a"/>
+        <!-- Rides -->
+        <path d="M-14 -32 Q-10 -30 -6 -32" stroke="#9a6a4a" stroke-width="0.8" fill="none" opacity="0.5"/>
+        <path d="M6 -32 Q10 -30 14 -32" stroke="#9a6a4a" stroke-width="0.8" fill="none" opacity="0.5"/>
+        <!-- Nez proéminent -->
+        <path d="M0 -34 Q4 -26 1 -24 L-2 -25" fill="#A8643A" opacity="0.5"/>
+        <!-- Sourire sage -->
+        <path d="M-4 -20 Q0 -18 4 -20" stroke="#8a5a3a" stroke-width="1" fill="none"/>
+        <!-- Oreilles avec poils -->
+        <ellipse cx="-21" cy="-35" rx="5" ry="7" fill="#A8643A" opacity="0.7"/>
+        <ellipse cx="21" cy="-35" rx="5" ry="7" fill="#A8643A" opacity="0.7"/>
+      </g>
+    </svg>
+    <div class="character-info">
+      <h3>Jeddi Mohand</h3>
+      <div class="tifinagh">ⵊⴻⴷⴷⵉ ⵎⵓⵃⴰⵏⴷ</div>
+      <p>Le sage. Gardien de l'olivier sacré. Parle en proverbes kabyles. « Celui qui n'a pas de racines, le vent l'emporte. »</p>
+    </div>
+  </div>
+
+</div>
+
+<div style="margin-top: 60px; text-align: center; color: #5C6B3C; font-size: 0.9rem;">
+  <p class="tifinagh-deco">ⵜⴰⵏⴻⵎⵎⵉⵔⵜ</p>
+  <p style="margin-top: 8px; color: #666;">POC Dessin — AmazighComics v0.1</p>
+</div>
+
+</body>
+</html>
