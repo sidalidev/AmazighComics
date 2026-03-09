@@ -17,13 +17,15 @@ export interface Episode extends EpisodeMeta {
 }
 
 export interface PanelData {
-  index: number;
-  type: "image" | "placeholder";
-  src?: string;
-  scene: string;
-  dialogue?: string;
-  mood: string;
-  colors: string[];
+  index: number
+  type: "image" | "placeholder"
+  src?: string
+  scene: string
+  dialogue?: string
+  narration?: string
+  bubblePosition?: string
+  mood: string
+  colors: string[]
 }
 
 function getEpisodeDirs(): string[] {

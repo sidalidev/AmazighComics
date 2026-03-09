@@ -8,6 +8,7 @@
       "index": 0,
       "type": "placeholder",
       "scene": "Vue panoramique des montagnes du Djurdjura au lever du soleil. La brume enveloppe les crêtes.",
+      "narration": "Il y a très longtemps, dans les montagnes du Djurdjura, là où les aigles touchent les nuages et où les oliviers ont des racines plus vieilles que les empires...",
       "mood": "dawn",
       "colors": ["#C4843A", "#4A7C9B", "#F5E6C8"]
     },
@@ -15,6 +16,7 @@
       "index": 1,
       "type": "placeholder",
       "scene": "Le village de Taddart, perché sur une colline. Maisons en pierre, toits de tuile rouge, oliviers centenaires.",
+      "narration": "...se dressait un village que personne n'avait jamais réussi à soumettre.",
       "dialogue": "ⴰⵣⵓⵍ ⴼⴻⵍⵍⴰⵡⴻⵏ — Bienvenue à Taddart.",
       "mood": "warm",
       "colors": ["#C4843A", "#8B6914"]
@@ -23,6 +25,7 @@
       "index": 2,
       "type": "placeholder",
       "scene": "Méziane, 22 ans, frappe le fer à la forge. Étincelles dans la pénombre. Muscles tendus, regard concentré.",
+      "narration": "Méziane était forgeron, comme son père, et le père de son père. Mais lui, il forgeait autre chose que des outils...",
       "mood": "warm",
       "colors": ["#C4843A", "#2A2520"]
     },
@@ -38,6 +41,7 @@
       "index": 4,
       "type": "placeholder",
       "scene": "L'assemblée du village. Les anciens assis en cercle sous le grand olivier. Visages graves.",
+      "narration": "Ce soir-là, le tajmaɛt — l'assemblée du village — se réunit sous le grand olivier. Les nouvelles n'étaient pas bonnes.",
       "dialogue": "Ils arrivent. Nous devons choisir : se soumettre ou résister.",
       "mood": "cool",
       "colors": ["#5C6B3C", "#4A7C9B"]
@@ -46,7 +50,8 @@
       "index": 5,
       "type": "placeholder",
       "scene": "Tamurt, la grand-mère de Méziane, debout malgré son âge. Elle pointe le doigt vers la montagne.",
-      "dialogue": "Nos ancêtres n'ont jamais plié. Nous non plus.",
+      "narration": "Tamurt, la doyenne, se leva. Quand elle parlait, même le vent se taisait.",
+      "dialogue": "ⵉⵎⴰⵡⵍⴰⵏ ⵏⵏⴻⵖ — Nos ancêtres n'ont jamais plié. Nous non plus.",
       "mood": "earth",
       "colors": ["#8B6914", "#5C6B3C"]
     },
@@ -54,6 +59,7 @@
       "index": 6,
       "type": "placeholder",
       "scene": "Méziane marche seul dans la forêt de cèdres. Lumière filtrant entre les branches.",
+      "narration": "Cette nuit-là, Méziane ne trouva pas le sommeil. Ses pas le guidèrent vers la forêt ancienne, là où même les chasseurs n'osaient plus aller...",
       "mood": "forest",
       "colors": ["#5C6B3C", "#8B6914"]
     },
@@ -61,6 +67,7 @@
       "index": 7,
       "type": "placeholder",
       "scene": "Il découvre une grotte cachée derrière une cascade. Des symboles tifinagh gravés sur la paroi.",
+      "narration": "Derrière la cascade, une grotte. Et sur ses murs... des inscriptions que personne n'avait vues depuis des siècles.",
       "dialogue": "Qu'est-ce que... ces inscriptions...",
       "mood": "cool",
       "colors": ["#4A7C9B", "#2A2520"]
@@ -69,6 +76,7 @@
       "index": 8,
       "type": "placeholder",
       "scene": "Vue rapprochée des gravures ancestrales. Des symboles qui brillent faiblement dans l'obscurité.",
+      "narration": "Les symboles tifinagh se mirent à luire. Les ancêtres avaient laissé un message — pour celui qui aurait le courage de le chercher.",
       "mood": "night",
       "colors": ["#2A2520", "#4A7C9B"]
     },
@@ -76,6 +84,7 @@
       "index": 9,
       "type": "placeholder",
       "scene": "Méziane sort de la grotte, le soleil couchant embrase le ciel. Il serre un objet ancien dans sa main. Plan large épique.",
+      "narration": "À l'aube, Méziane émergea de la grotte. Il tenait dans sa main quelque chose que le monde avait oublié. Le village ne serait plus jamais le même.",
       "dialogue": "Le village ne tombera pas. Pas cette fois.",
       "mood": "dawn",
       "colors": ["#C4843A", "#4A7C9B", "#8B6914"]
