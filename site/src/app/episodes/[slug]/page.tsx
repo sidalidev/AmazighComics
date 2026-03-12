@@ -20,9 +20,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const episode = getEpisodeBySlug(slug);
   if (!episode) return {};
 
+  // Utiliser le premier panel comme OG image si dispo
+  const ogImage = episode.panels[0]?.src || "/images/og-default.jpg"
+
   return {
     title: `Ép. ${episode.number} — ${episode.title}`,
     description: episode.description,
+    openGraph: {
+      title: `Ép. ${episode.number} — ${episode.title} | Amazigh Comics`,
+      description: episode.description,
+      images: [{ url: ogImage, width: 1200, height: 630 }],
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `Ép. ${episode.number} — ${episode.title}`,
+      description: episode.description,
+      images: [ogImage],
+    },
   };
 }
 

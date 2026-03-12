@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://amazigh-comics.vercel.app/sitemap.xml

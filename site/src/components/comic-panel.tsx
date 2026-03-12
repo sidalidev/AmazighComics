@@ -1,58 +1,137 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { useRef, useEffect, useState } from "react"
+import { motion, useScroll, useTransform, useInView } from "framer-motion"
 import type { PanelData } from "@/lib/episodes"
 
 export function ComicPanel({
   panel,
   priority = false,
+  index = 0,
+  onEnterView,
 }: {
   panel: PanelData
   priority?: boolean
+  index?: number
+  onEnterView?: (mood: string) => void
 }) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const isInView = useInView(containerRef, { amount: 0.4, once: false })
+  const [hasAnimated, setHasAnimated] = useState(false)
+
+  // Parallax scroll
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  })
+
+  // L'image bouge plus lentement que le scroll (parallax)
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "-15%"])
+  // La narration a un léger décalage
+  const narrationY = useTransform(scrollYProgress, [0, 1], ["20px", "-20px"])
+  const narrationOpacity = useTransform(scrollYProgress, [0.1, 0.3, 0.7, 0.9], [0, 1, 1, 0])
+
+  // Notifier le parent quand le panel entre en vue
+  useEffect(() => {
+    if (isInView && !hasAnimated) {
+      setHasAnimated(true)
+      onEnterView?.(panel.mood)
+    }
+  }, [isInView, hasAnimated, onEnterView, panel.mood])
+
+  const isFullWidth = panel.type === "image" && panel.src
+
   return (
-    <div className="space-y-3">
-      {/* Narration au-dessus du panel */}
+    <div ref={containerRef} className="relative">
+      {/* Narration flottante avec parallax */}
       {panel.narration && (
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, margin: "-30px" }}
-          transition={{ duration: 0.8 }}
-          className="text-center px-4"
+          style={{ y: narrationY, opacity: narrationOpacity }}
+          className="relative z-20 py-12 sm:py-16 px-6"
         >
-          <p className="text-sm sm:text-base text-[rgb(var(--charbon)_/_0.7)] italic font-[var(--font-display)] leading-relaxed max-w-lg mx-auto">
-            {panel.narration}
-          </p>
+          <NarrationText text={panel.narration} isInView={isInView} />
         </motion.div>
       )}
 
-      {/* Panel image */}
-      {panel.type === "image" && panel.src ? (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="relative rounded-lg overflow-hidden shadow-lg ring-1 ring-[rgb(var(--charbon)_/_0.1)]"
-        >
-          <img
-            src={panel.src}
-            alt={panel.scene}
-            loading={priority ? "eager" : "lazy"}
-            className="w-full h-auto block"
-            style={{ filter: "saturate(1.8) contrast(1.3) brightness(0.95)" }}
-          />
-          {/* Dialogue en overlay */}
+      {/* Panel image avec parallax */}
+      {isFullWidth ? (
+        <div className="relative overflow-hidden rounded-lg sm:rounded-xl">
+          {/* Image avec parallax */}
+          <motion.div
+            style={{ y: imageY }}
+            className="relative"
+          >
+            <motion.img
+              src={panel.src}
+              alt={panel.scene}
+              loading={priority ? "eager" : "lazy"}
+              initial={{ scale: 1.1, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
+              className="w-full h-auto block"
+              style={{ filter: "saturate(1.4) contrast(1.1) brightness(1.0)" }}
+            />
+
+            {/* Vignette overlay — bords sombres */}
+            <div className="absolute inset-0 pointer-events-none"
+              style={{
+                background: "radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.25) 100%)",
+              }}
+            />
+          </motion.div>
+
+          {/* Dialogue en overlay avec animation */}
           {panel.dialogue && (
-            <div className="absolute bottom-4 left-4 right-4 flex justify-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20, scale: 0.9 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+              className="absolute bottom-6 left-4 right-4 flex justify-center z-10"
+            >
               <SpeechBubble text={panel.dialogue} position={panel.bubblePosition} />
-            </div>
+            </motion.div>
           )}
-        </motion.div>
+        </div>
       ) : (
         <PlaceholderPanel panel={panel} />
       )}
+    </div>
+  )
+}
+
+// Texte narratif avec effet typewriter
+function NarrationText({ text, isInView }: { text: string, isInView: boolean }) {
+  const [displayedText, setDisplayedText] = useState("")
+  const [isDone, setIsDone] = useState(false)
+  const hasStarted = useRef(false)
+
+  useEffect(() => {
+    if (!isInView || hasStarted.current) return
+    hasStarted.current = true
+
+    let i = 0
+    const interval = setInterval(() => {
+      i++
+      setDisplayedText(text.slice(0, i))
+      if (i >= text.length) {
+        clearInterval(interval)
+        setIsDone(true)
+      }
+    }, 30) // 30ms par caractère
+
+    return () => clearInterval(interval)
+  }, [isInView, text])
+
+  return (
+    <div className="max-w-2xl mx-auto text-center">
+      <p className="text-lg sm:text-xl md:text-2xl text-[rgb(var(--creme)_/_0.9)] italic font-[var(--font-display)] leading-relaxed tracking-wide">
+        {displayedText || text}
+        {!isDone && hasStarted.current && (
+          <span className="animate-pulse text-[rgb(var(--primary))]">|</span>
+        )}
+      </p>
     </div>
   )
 }
@@ -70,38 +149,57 @@ function PlaceholderPanel({ panel }: { panel: PanelData }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, scale: 0.95 }}
+      whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className={`relative rounded-lg overflow-hidden shadow-md bg-gradient-to-br ${gradient} min-h-[300px] sm:min-h-[400px] flex flex-col items-center justify-center p-8 amazigh-pattern`}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className={`relative rounded-xl overflow-hidden shadow-2xl bg-gradient-to-br ${gradient} min-h-[50vh] sm:min-h-[60vh] flex flex-col items-center justify-center p-8 amazigh-pattern`}
     >
-      <p className="text-center text-sm text-[rgb(var(--foreground)_/_0.6)] max-w-xs font-medium italic mb-4">
+      {/* Scène description */}
+      <motion.p
+        initial={{ opacity: 0, y: 10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.3, duration: 0.6 }}
+        className="text-center text-sm sm:text-base text-[rgb(var(--creme)_/_0.7)] max-w-sm font-medium italic mb-6"
+      >
         {panel.scene}
-      </p>
-      {panel.dialogue && <SpeechBubble text={panel.dialogue} />}
+      </motion.p>
+
+      {/* Dialogue */}
+      {panel.dialogue && (
+        <motion.div
+          initial={{ opacity: 0, y: 20, scale: 0.9 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.6, duration: 0.5 }}
+        >
+          <SpeechBubble text={panel.dialogue} />
+        </motion.div>
+      )}
+
+      {/* Vignette sombre */}
+      <div className="absolute inset-0 pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.3) 100%)",
+        }}
+      />
     </motion.div>
   )
 }
 
 function SpeechBubble({ text, position }: { text: string, position?: string }) {
-  // Position par défaut : bottom-center
-  const posClass = position === "top" ? "top-4 left-4 right-4" :
-    position === "top-left" ? "top-4 left-4" :
-    position === "top-right" ? "top-4 right-4" :
-    ""
-
   return (
-    <div className={`relative bg-white/95 backdrop-blur-sm rounded-2xl px-5 py-3 shadow-md max-w-[280px] border border-[rgb(var(--charbon)_/_0.08)]`}>
-      <p className="text-sm text-[rgb(var(--charbon))] font-medium text-center leading-relaxed">
+    <div className="relative bg-white/95 backdrop-blur-md rounded-2xl px-6 py-4 shadow-xl max-w-[320px] border border-white/20">
+      <p className="text-sm sm:text-base text-[rgb(var(--charbon))] font-medium text-center leading-relaxed">
         {text}
       </p>
       {/* Queue de bulle */}
       <svg
-        className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-3 text-white/95"
-        viewBox="0 0 16 12"
+        className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-5 h-4 text-white/95 drop-shadow-sm"
+        viewBox="0 0 20 16"
       >
-        <path d="M0 0 L8 12 L16 0 Z" fill="currentColor" />
+        <path d="M0 0 L10 16 L20 0 Z" fill="currentColor" />
       </svg>
     </div>
   )
