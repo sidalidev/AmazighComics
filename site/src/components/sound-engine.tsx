@@ -19,7 +19,7 @@ export function useSoundEngine() {
   const [isEnabled, setIsEnabled] = useState(false)
   // useRef pour éviter le bug de stale closure dans les callbacks
   const enabledRef = useRef(false)
-  const speechRef = useRef<SpeechSynthesisUtterance | null>(null)
+  const narrationRef = useRef<HTMLAudioElement | null>(null)
   const isSpeakingRef = useRef(false)
 
   // Sync ref avec state
@@ -118,19 +118,19 @@ export function useSoundEngine() {
     ambianceRef.current = audio
   }, [])
 
-  // Narration vocale — Web Speech API
-  const speakNarration = useCallback((text: string) => {
+  // Narration vocale — fichiers ElevenLabs pré-générés
+  const playNarration = useCallback((panelIndex: number) => {
     if (!enabledRef.current) return
-    if (typeof window === "undefined" || !window.speechSynthesis) return
 
-    // Annuler la narration précédente
-    window.speechSynthesis.cancel()
+    // Stopper la narration précédente
+    if (narrationRef.current) {
+      narrationRef.current.pause()
+      narrationRef.current = null
+    }
 
-    const utterance = new SpeechSynthesisUtterance(text)
-    utterance.lang = "fr-FR"
-    utterance.rate = 0.85 // Plus lent pour l'effet narratif
-    utterance.pitch = 0.9 // Voix légèrement plus grave
-    utterance.volume = 0.7
+    const src = `/audio/narration/panel-${String(panelIndex).padStart(2, "0")}.mp3`
+    const audio = new Audio(src)
+    audio.volume = 0.85
 
     // Baisser le volume de la BGM pendant la narration
     if (bgmRef.current) {
@@ -138,8 +138,9 @@ export function useSoundEngine() {
       const originalVol = bgm.volume
       bgm.volume = originalVol * 0.3 // Duck la musique
 
-      utterance.onend = () => {
+      audio.onended = () => {
         isSpeakingRef.current = false
+        narrationRef.current = null
         // Remonter le volume progressivement
         let vol = bgm.volume
         const fadeBack = setInterval(() => {
@@ -152,14 +153,24 @@ export function useSoundEngine() {
         }, 50)
       }
     } else {
-      utterance.onend = () => {
+      audio.onended = () => {
         isSpeakingRef.current = false
+        narrationRef.current = null
       }
     }
 
+    // Gestion d'erreur silencieuse (fichier inexistant = pas de narration)
+    audio.onerror = () => {
+      isSpeakingRef.current = false
+      narrationRef.current = null
+    }
+
     isSpeakingRef.current = true
-    speechRef.current = utterance
-    window.speechSynthesis.speak(utterance)
+    narrationRef.current = audio
+    audio.play().catch(() => {
+      isSpeakingRef.current = false
+      narrationRef.current = null
+    })
   }, [])
 
   // Fade out BGM
@@ -190,7 +201,7 @@ export function useSoundEngine() {
       // Couper tout
       bgmRef.current?.pause()
       ambianceRef.current?.pause()
-      window.speechSynthesis?.cancel()
+      narrationRef.current?.pause()
       sfxPoolRef.current.forEach(a => a.pause())
     }
   }, [])
@@ -200,8 +211,8 @@ export function useSoundEngine() {
     return () => {
       bgmRef.current?.pause()
       ambianceRef.current?.pause()
+      narrationRef.current?.pause()
       sfxPoolRef.current.forEach(a => a.pause())
-      window.speechSynthesis?.cancel()
     }
   }, [])
 
@@ -211,7 +222,7 @@ export function useSoundEngine() {
     playBGM,
     playSFX,
     playMoodSound,
-    speakNarration,
+    playNarration,
     fadeOutBGM,
     toggleSound,
     isSpeaking: isSpeakingRef.current,

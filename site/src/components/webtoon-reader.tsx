@@ -41,7 +41,7 @@ export function WebtoonReader({
   // Tracker quels panels ont déjà été joués (pour les panels 2+)
   const playedPanelsRef = useRef(new Set<number>())
 
-  // Quand un panel entre en vue — jouer le son d'ambiance + narration vocale
+  // Quand un panel entre en vue — jouer le son d'ambiance + narration ElevenLabs
   const handlePanelEnterView = useCallback((mood: string, narration?: string, panelIndex?: number) => {
     // Ne rien faire tant que la lecture n'a pas commencé
     if (!readingStartedRef.current) return
@@ -49,10 +49,10 @@ export function WebtoonReader({
     if (panelIndex !== undefined && playedPanelsRef.current.has(panelIndex)) return
     if (panelIndex !== undefined) playedPanelsRef.current.add(panelIndex)
     sound.playMoodSound(mood)
-    // Lire la narration à voix haute
-    if (narration) {
+    // Lire la narration ElevenLabs (fichier MP3 pré-généré)
+    if (narration && panelIndex !== undefined) {
       setTimeout(() => {
-        sound.speakNarration(narration)
+        sound.playNarration(panelIndex)
       }, 800)
     }
   }, [sound])
@@ -73,7 +73,7 @@ export function WebtoonReader({
       setTimeout(() => {
         sound.playMoodSound(firstPanel.mood)
         if (firstPanel.narration) {
-          setTimeout(() => sound.speakNarration(firstPanel.narration!), 800)
+          setTimeout(() => sound.playNarration(0), 800)
         }
       }, 1500)
     }
