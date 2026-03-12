@@ -12,6 +12,16 @@ const MOOD_SOUNDS: Record<string, string[]> = {
   night: ["/audio/sfx/cave-drip.mp3"],
 }
 
+// AudioContext global — créé une seule fois au premier clic utilisateur
+let globalAudioCtx: AudioContext | null = null
+
+function getAudioCtx(): AudioContext {
+  if (!globalAudioCtx) {
+    globalAudioCtx = new AudioContext()
+  }
+  return globalAudioCtx
+}
+
 export function useSoundEngine() {
   const bgmRef = useRef<HTMLAudioElement | null>(null)
   const ambianceRef = useRef<HTMLAudioElement | null>(null)
@@ -27,10 +37,28 @@ export function useSoundEngine() {
     enabledRef.current = isEnabled
   }, [isEnabled])
 
-  // Activer le son au premier clic
+  // Activer le son au premier clic — débloquer l'AudioContext (Chrome autoplay policy)
   const enableSound = useCallback(() => {
     enabledRef.current = true
     setIsEnabled(true)
+    // Résumer l'AudioContext si suspendu (doit être dans un user gesture)
+    const ctx = getAudioCtx()
+    if (ctx.state === "suspended") {
+      ctx.resume()
+    }
+    // Créer l'élément narration et le "débloquer" avec un silence
+    // Cet élément sera réutilisé pour toutes les narrations
+    if (!narrationRef.current) {
+      const a = new Audio()
+      a.volume = 0
+      // Jouer un micro-silence pour débloquer l'élément dans le user gesture
+      a.src = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA="
+      a.play().then(() => {
+        a.pause()
+        a.currentTime = 0
+      }).catch(() => {})
+      narrationRef.current = a
+    }
   }, [])
 
   // Jouer la musique de fond avec fade-in
@@ -119,57 +147,54 @@ export function useSoundEngine() {
   }, [])
 
   // Narration vocale — fichiers ElevenLabs pré-générés
+  // Réutilise l'élément Audio débloqué dans enableSound()
   const playNarration = useCallback((panelIndex: number) => {
     if (!enabledRef.current) return
+    const audio = narrationRef.current
+    if (!audio) return
 
-    // Stopper la narration précédente
-    if (narrationRef.current) {
-      narrationRef.current.pause()
-      narrationRef.current = null
-    }
+    // Stopper la narration en cours
+    audio.pause()
+    audio.currentTime = 0
 
     const src = `/audio/narration/panel-${String(panelIndex).padStart(2, "0")}.mp3`
-    const audio = new Audio(src)
     audio.volume = 0.85
+    isSpeakingRef.current = true
 
-    // Baisser le volume de la BGM pendant la narration
-    if (bgmRef.current) {
-      const bgm = bgmRef.current
-      const originalVol = bgm.volume
-      bgm.volume = originalVol * 0.3 // Duck la musique
+    // Duck la BGM pendant la narration
+    const bgm = bgmRef.current
+    const originalBgmVol = bgm ? bgm.volume : 0
+    if (bgm) bgm.volume = originalBgmVol * 0.3
 
-      audio.onended = () => {
-        isSpeakingRef.current = false
-        narrationRef.current = null
-        // Remonter le volume progressivement
-        let vol = bgm.volume
-        const fadeBack = setInterval(() => {
-          vol += (originalVol - bgm.volume) / 20
-          if (vol >= originalVol) {
-            vol = originalVol
-            clearInterval(fadeBack)
-          }
+    const fadeBackBGM = () => {
+      if (!bgm) return
+      let vol = bgm.volume
+      const fadeBack = setInterval(() => {
+        vol += (originalBgmVol - vol) / 15
+        if (vol >= originalBgmVol * 0.95) {
+          bgm.volume = originalBgmVol
+          clearInterval(fadeBack)
+        } else {
           bgm.volume = vol
-        }, 50)
-      }
-    } else {
-      audio.onended = () => {
-        isSpeakingRef.current = false
-        narrationRef.current = null
-      }
+        }
+      }, 50)
     }
 
-    // Gestion d'erreur silencieuse (fichier inexistant = pas de narration)
+    audio.onended = () => {
+      isSpeakingRef.current = false
+      fadeBackBGM()
+    }
+
     audio.onerror = () => {
       isSpeakingRef.current = false
-      narrationRef.current = null
+      fadeBackBGM()
     }
 
-    isSpeakingRef.current = true
-    narrationRef.current = audio
+    // Changer la source et jouer
+    audio.src = src
     audio.play().catch(() => {
       isSpeakingRef.current = false
-      narrationRef.current = null
+      fadeBackBGM()
     })
   }, [])
 
