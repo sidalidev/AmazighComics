@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ComicPanel } from "./comic-panel"
 import { useSoundEngine } from "./sound-engine"
@@ -36,20 +36,48 @@ export function WebtoonReader({
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  // Quand un panel entre en vue, jouer le son du mood
-  const handlePanelEnterView = useCallback((mood: string) => {
+  // Ref pour savoir si la lecture a commencé (évite le trigger prématuré)
+  const readingStartedRef = useRef(false)
+  // Tracker quels panels ont déjà été joués (pour les panels 2+)
+  const playedPanelsRef = useRef(new Set<number>())
+
+  // Quand un panel entre en vue — jouer le son d'ambiance + narration vocale
+  const handlePanelEnterView = useCallback((mood: string, narration?: string, panelIndex?: number) => {
+    // Ne rien faire tant que la lecture n'a pas commencé
+    if (!readingStartedRef.current) return
+    // Éviter les doublons (le panel 0 est géré par startReading)
+    if (panelIndex !== undefined && playedPanelsRef.current.has(panelIndex)) return
+    if (panelIndex !== undefined) playedPanelsRef.current.add(panelIndex)
     sound.playMoodSound(mood)
+    // Lire la narration à voix haute
+    if (narration) {
+      setTimeout(() => {
+        sound.speakNarration(narration)
+      }, 800)
+    }
   }, [sound])
 
   // Lancer l'intro cinématique
   const startReading = useCallback(() => {
     setShowIntro(false)
     sound.enableSound()
+    readingStartedRef.current = true
     // Lancer la BGM après un court délai
     setTimeout(() => {
-      sound.playBGM("/audio/ambient-kabyle.mp3", 0.15)
-    }, 1000)
-  }, [sound])
+      sound.playBGM("/audio/ambient-kabyle.mp3", 0.2)
+    }, 500)
+    // Déclencher le premier panel manuellement (il est déjà en vue)
+    playedPanelsRef.current.add(0)
+    const firstPanel = episode.panels[0]
+    if (firstPanel) {
+      setTimeout(() => {
+        sound.playMoodSound(firstPanel.mood)
+        if (firstPanel.narration) {
+          setTimeout(() => sound.speakNarration(firstPanel.narration!), 800)
+        }
+      }, 1500)
+    }
+  }, [sound, episode.panels])
 
   return (
     <div className="relative bg-[rgb(var(--charbon))] min-h-screen">

@@ -61,11 +61,11 @@ export function ComicPanel({
   panel: PanelData
   priority?: boolean
   index?: number
-  onEnterView?: (mood: string) => void
+  onEnterView?: (mood: string, narration?: string, panelIndex?: number) => void
 }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(containerRef, { amount: 0.3, once: false })
-  const [hasTriggered, setHasTriggered] = useState(false)
+  const hasTriggeredRef = useRef(false)
 
   // Parallax scroll — plus prononcé
   const { scrollYProgress } = useScroll({
@@ -84,13 +84,13 @@ export function ComicPanel({
   const narrationY = useTransform(scrollYProgress, [0, 1], ["40px", "-40px"])
   const narrationOpacity = useTransform(scrollYProgress, [0.05, 0.25, 0.65, 0.85], [0, 1, 1, 0])
 
-  // Notifier le parent (son) quand le panel entre en vue
+  // Notifier le parent (son + narration) quand le panel entre en vue
   useEffect(() => {
-    if (isInView && !hasTriggered) {
-      setHasTriggered(true)
-      onEnterView?.(panel.mood)
+    if (isInView && !hasTriggeredRef.current) {
+      hasTriggeredRef.current = true
+      onEnterView?.(panel.mood, panel.narration, index)
     }
-  }, [isInView, hasTriggered, onEnterView, panel.mood])
+  }, [isInView, onEnterView, panel.mood, panel.narration])
 
   const isFullWidth = panel.type === "image" && panel.src
   const panelTransition = PANEL_TRANSITIONS[panel.mood] || PANEL_TRANSITIONS.warm
