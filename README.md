@@ -16,7 +16,7 @@
 
 ## L'univers
 
-### Le village — Thaddart n Yidurar (le village des montagnes)
+### Le village — Taddart n Yidurar (le village des montagnes)
 
 Perché dans les montagnes du Djurdjura. Accessible uniquement par un sentier que seuls les habitants connaissent. Entouré d'oliviers centenaires, de figuiers, et d'une source d'eau pure qui ne tarit jamais.
 
@@ -58,15 +58,15 @@ Ou bien : une époque intemporelle / légèrement fantastique, comme Astérix qu
 - **Passion** : Le couscous de sa mère. Il en mange 3 plats par jour. Transporte toujours un tajine quelque part.
 - **Animal de compagnie** : Un sanglier kabyle (comme Idéfix mais en plus sauvage).
 
-### 3. Jeddi Mohand (le sage — équivalent Panoramix)
-- **Nom** : Jeddi Mohand (ⵊⴻⴷⴷⵉ ⵎⵧⵃⴰⵏⴷ) — "Grand-père Mohand"
+### 3. Jeddi Muḥend (le sage — équivalent Panoramix)
+- **Nom** : Jeddi Muḥend (ⵊⴻⴷⴷⵉ ⵎⵓⵃⴻⵏⴷ) — "Grand-père Mohand"
 - **Physique** : Très vieux, longue barbe blanche, marche avec un bâton noueux. Regard perçant.
 - **Personnalité** : Sage, mystérieux, parle en proverbes kabyles. Connaît tous les secrets de la montagne et de l'olivier sacré. Parfois cryptique au point d'énerver tout le monde.
 - **Rôle** : Gardien de l'olivier millénaire. Prépare l'huile sacrée selon un rituel ancestral.
 - **Réplique typique** : "Celui qui n'a pas gravi la montagne ne connaît pas la plaine."
 
-### 4. Tassadit (la guerrière)
-- **Nom** : Tassadit (ⵜⴰⵙⵙⴰⴷⵉⵜ) — prénom kabyle féminin signifiant "la chanceuse"
+### 4. Tassaɛdit (la guerrière)
+- **Nom** : Tassaɛdit (ⵝⴰⵙⴰⵄⴷⵉⵝ) — prénom kabyle féminin signifiant "la chanceuse"
 - **Physique** : Grande, athlétique, cheveux noirs tressés avec des bijoux berbères en argent.
 - **Personnalité** : Féroce, directe, ne mâche pas ses mots. Meilleure combattante du village. Les envahisseurs la craignent plus que les hommes.
 - **Inspiration** : La Kahina (Dihya), reine guerrière berbère historique.
@@ -78,8 +78,8 @@ Ou bien : une époque intemporelle / légèrement fantastique, comme Astérix qu
 - **Personnalité** : Pompeux, aime les discours, se croit plus important qu'il ne l'est. Mais au fond, il aime son village et fait les bons choix dans les moments critiques.
 - **Running gag** : Il tombe toujours de son bouclier.
 
-### 6. Nna Wardia (la mère nourricière)
-- **Nom** : Nna Wardia (ⵏⵏⴰ ⵡⴰⵔⴷⵉⴰ) — "Tante Wardia"
+### 6. Nna Wardiya (la mère nourricière)
+- **Nom** : Nna Wardia (ⵏⵏⴰ ⵡⴰⵔⴷⵉⵢⴰ) — "Tante Wardia"
 - **Physique** : Ronde, joyeuse, toujours en train de cuisiner.
 - **Rôle** : La mère/tante de Gaya. Son couscous est légendaire. Quand les envahisseurs goûtent sa cuisine, ils ne veulent plus repartir (source de gags récurrents).
 - **Running gag** : "Mange, t'es maigre !" (même à Gaya qui fait 150 kg).
